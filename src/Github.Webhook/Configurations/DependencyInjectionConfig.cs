@@ -24,9 +24,9 @@ namespace Github.Webhook.Configurations
             // Domain - Commands
 
             // Infra - Data
-            var githubSecret = configuration[Secrets.GithubSecretKey];
+            var githubSecret = configuration[Secrets.ApiGithubSecretKey];
             ArgumentNullException.ThrowIfNull(nameof(githubSecret));
-            services.AddSingleton(c => Secrets.GithubSecret = githubSecret ?? string.Empty);
+            services.AddSingleton(c => Secrets.ApiGithubSecret = githubSecret ?? string.Empty);
         }
     }
 }

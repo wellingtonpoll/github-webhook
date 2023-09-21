@@ -46,7 +46,7 @@ namespace Github.Webhook.Validators
         private static string GetHash(RequestWebhookEventViewModel model)
         {
             string hash = string.Empty;
-            using (var hmac = new HMACSHA256(Encoding.ASCII.GetBytes(Secrets.GithubSecret)))
+            using (var hmac = new HMACSHA256(Encoding.ASCII.GetBytes(Secrets.ApiGithubSecret)))
             {
                 var hashBytes = hmac.ComputeHash(Encoding.ASCII.GetBytes(model.Body));
                 hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "").ToLower();

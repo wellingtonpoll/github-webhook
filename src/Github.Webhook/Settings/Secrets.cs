@@ -5,11 +5,11 @@
     /// </summary>
     public static class Secrets
     {
-        public static string GithubSecretKey = "GITHUB_SECRET";
+        public static string ApiGithubSecretKey = "API_GITHUB_SECRET";
 
         /// <summary>
         /// Github webhook secret
         /// </summary>
-        public static string GithubSecret { get; set; } = string.Empty;
+        public static string ApiGithubSecret { get; set; } = string.Empty;
     }
 }
