@@ -1,3 +1,5 @@
+[![Docker Image CI](https://github.com/wellingtonpoll/Github.Webhook/actions/workflows/docker-image.yml/badge.svg)](https://github.com/wellingtonpoll/Github.Webhook/actions/workflows/docker-image.yml)
+
 ## About
 
 <!-- A description of the package and where one can find more documentation -->
