@@ -5,8 +5,8 @@ A web hook to receive github events.
 
 # run on docker
 ```sh
-docker build -t onboarding-api .
-docker run -d -p 80:80 onboarding-api
+docker build -t github-webhook .
+docker run -d -p 80:80 github-webhook
 ```
 
 ## Give a Star! :star:
