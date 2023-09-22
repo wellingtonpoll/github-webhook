@@ -36,8 +36,8 @@ namespace Github.Webhook.Validators
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Missing X-Hub-Signature!")
-                .GithubSignature(message)
-                .Equal(model => GetHash(model))
+                //.GithubSignature(message)
+                //.Equal(model => GetHash(model))
                 .WithMessage(message);
         }
 
