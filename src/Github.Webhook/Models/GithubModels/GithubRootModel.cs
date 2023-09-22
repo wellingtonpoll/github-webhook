@@ -1,10 +1,5 @@
 ﻿namespace Github.Webhook.Models.GithubModels
 {
-    //public class GithubRootModel
-    //{
-    //}
-
-
     public class GithubRootModel
     {
         public string _ref { get; set; }
@@ -64,9 +59,9 @@
         public string labels_url { get; set; }
         public string releases_url { get; set; }
         public string deployments_url { get; set; }
-        public DateTime created_at { get; set; }
-        public DateTime updated_at { get; set; }
-        public DateTime pushed_at { get; set; }
+        public string created_at { get; set; }
+        public string updated_at { get; set; }
+        public string pushed_at { get; set; }
         public string git_url { get; set; }
         public string ssh_url { get; set; }
         public string clone_url { get; set; }
