@@ -38,7 +38,6 @@ namespace Github.Webhook.API
         public void ConfigureServices(IServiceCollection services)
         {
             // WebAPI Config
-
             services
                 .AddControllers()
                 .AddNewtonsoftJson(config =>

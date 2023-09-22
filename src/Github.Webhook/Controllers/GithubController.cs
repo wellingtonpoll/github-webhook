@@ -29,6 +29,10 @@ namespace Github.Webhook.Controllers
         /// <summary>
         /// Github event webhook receiver
         /// </summary>
+        /// <param name="githubEvent"></param>
+        /// <param name="githubSignature"></param>
+        /// <param name="githubDelivery"></param>
+        /// <param name="githubSignature256"></param>
         /// <param name="webhookEventViewModel">Github event model</param>
         /// <returns></returns>
         /// <response code="202">Github event accepted</response>
@@ -40,9 +44,19 @@ namespace Github.Webhook.Controllers
         [ProducesResponseType(typeof(ResponseViewModel), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ResponseViewModel), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(ResponseViewModel), StatusCodes.Status503ServiceUnavailable)]
-        public async Task<IActionResult> PostAsync([FromBody] RequestWebhookEventViewModel webhookEventViewModel)
+        public async Task<IActionResult> PostAsync(
+            [FromHeader(Name = "X-GitHub-Event")] string githubEvent,
+            [FromHeader(Name = "X-Hub-Signature")] string githubSignature,
+            [FromHeader(Name = "X-GitHub-Delivery")] string githubDelivery,
+            [FromHeader(Name = "X-Hub-Signature-256")] string githubSignature256,
+            [FromBody] RequestWebhookEventViewModel webhookEventViewModel)
         {
             _logger.LogInformation("Received github event request webhook");
+
+            webhookEventViewModel.GithubEvent = githubEvent;
+            webhookEventViewModel.GithubSignature = githubSignature;
+            webhookEventViewModel.GithubDelivery = githubDelivery;
+            webhookEventViewModel.GithubSignature256 = githubSignature256;
 
             var validationResult = await _webhookEventValidator.ValidateAsync(webhookEventViewModel);
             _logger.LogInformation("Validating model {@Model} - {@ValidationResult}", webhookEventViewModel, validationResult);

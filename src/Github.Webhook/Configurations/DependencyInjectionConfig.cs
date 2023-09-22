@@ -1,4 +1,6 @@
-﻿using Github.Webhook.Settings;
+﻿using Github.Webhook.Middlewares;
+using Github.Webhook.Settings;
+using Github.Webhook.Validators;
 
 namespace Github.Webhook.Configurations
 {
@@ -11,6 +13,7 @@ namespace Github.Webhook.Configurations
         /// Add dependency injection
         /// </summary>
         /// <param name="services"></param>
+        /// <param name="configuration"></param>
         /// <exception cref="ArgumentNullException"></exception>
         public static void AddDependencyInjectionConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
@@ -18,6 +21,7 @@ namespace Github.Webhook.Configurations
             ArgumentNullException.ThrowIfNull(nameof(configuration));
 
             // Application
+            services.AddScoped(c => new WebhookEventValidator());
 
             // Domain - Events
 

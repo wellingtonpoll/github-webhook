@@ -7,11 +7,17 @@ using System.Text;
 
 namespace Github.Webhook.Validators
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class WebhookEventValidator : AbstractValidator<RequestWebhookEventViewModel>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public WebhookEventValidator()
         {
-            ValidateBody();
+            ValidateJson();
             ValidateEvent();
             ValidateSignature();
         }
@@ -26,18 +32,19 @@ namespace Github.Webhook.Validators
 
         private void ValidateSignature()
         {
-            RuleFor(c => c.GithubSignature)
+            var message = "X-Hub-Signature is not valid!";
+            RuleFor(c => c.GithubSignature ?? string.Empty)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Missing X-Hub-Signature!")
-                .GithubSignature()
+                .GithubSignature(message)
                 .Equal(model => GetHash(model))
-                .WithMessage("X-Hub-Signature is not valid!");
+                .WithMessage(message);
         }
 
-        private void ValidateBody()
+        private void ValidateJson()
         {
-            RuleFor(c => c.Body)
+            RuleFor(c => c.Json)
                 .NotNull()
                 .NotEmpty()
                 .WithMessage("Body is required!");
@@ -48,7 +55,7 @@ namespace Github.Webhook.Validators
             string hash = string.Empty;
             using (var hmac = new HMACSHA256(Encoding.ASCII.GetBytes(Secrets.ApiGithubSecret)))
             {
-                var hashBytes = hmac.ComputeHash(Encoding.ASCII.GetBytes(model.Body));
+                var hashBytes = hmac.ComputeHash(Encoding.ASCII.GetBytes(model.Json ?? string.Empty));
                 hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
             }
             return hash;

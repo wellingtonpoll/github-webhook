@@ -3,10 +3,23 @@ using FluentValidation.Validators;
 
 namespace Github.Webhook.Validators
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class GithubSignatureValidator<T> : PropertyValidator<T, string>
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public override string Name => "GithubSignatureValidator";
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public override bool IsValid(ValidationContext<T> context, string value)
         {
             return WebhookSignatureIsValid(value);
