@@ -6,7 +6,6 @@
     <Description>A web hook to receive github events</Description>
     <Title>Github.Webhook</Title>
     <TargetFramework>net7.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>caf799e2-f50e-4947-9c49-e11b7cf5b9dc</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>

@@ -17,7 +17,6 @@ namespace Github.Webhook.Validators
         /// </summary>
         public WebhookEventValidator()
         {
-            ValidateJson();
             ValidateEvent();
             ValidateSignature();
         }
@@ -42,20 +41,13 @@ namespace Github.Webhook.Validators
                 .WithMessage(message);
         }
 
-        private void ValidateJson()
-        {
-            RuleFor(c => c.Json)
-                .NotNull()
-                .NotEmpty()
-                .WithMessage("Body is required!");
-        }
-
         private static string GetHash(RequestWebhookEventViewModel model)
         {
             string hash = string.Empty;
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(model);
             using (var hmac = new HMACSHA256(Encoding.ASCII.GetBytes(Secrets.ApiGithubSecret)))
             {
-                var hashBytes = hmac.ComputeHash(Encoding.ASCII.GetBytes(model.Json ?? string.Empty));
+                var hashBytes = hmac.ComputeHash(Encoding.ASCII.GetBytes(json));
                 hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
             }
             return hash;
