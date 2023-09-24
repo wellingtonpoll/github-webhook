@@ -1,5 +1,6 @@
 ﻿using Github.Webhook.Models;
 using Github.Webhook.Validators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Github.Webhook.Controllers
@@ -36,12 +37,15 @@ namespace Github.Webhook.Controllers
         /// <param name="webhookEventViewModel">Github event model</param>
         /// <returns></returns>
         /// <response code="202">Github event accepted</response>
-        /// <response code="400">Bad request</response> 
+        /// <response code="400">Bad request</response>
+        /// <response code="403">Forbidden</response>
         /// <response code="500">Internal server error</response> 
         /// <response code="503">Service unavailable</response> 
         [HttpPost("event")]
+        [Authorize(AuthenticationSchemes = "Webhook", Policy = "Signature")]
         [ProducesResponseType(typeof(ResponseViewModel), StatusCodes.Status202Accepted)]
         [ProducesResponseType(typeof(ResponseViewModel), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ResponseViewModel), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(typeof(ResponseViewModel), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(ResponseViewModel), StatusCodes.Status503ServiceUnavailable)]
         public async Task<IActionResult> PostAsync(

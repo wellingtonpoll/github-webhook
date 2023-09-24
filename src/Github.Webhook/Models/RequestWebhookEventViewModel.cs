@@ -1,4 +1,5 @@
 ﻿using Github.Webhook.Models.GithubModels;
+using Newtonsoft.Json;
 
 namespace Github.Webhook.Models
 {
@@ -30,13 +31,44 @@ namespace Github.Webhook.Models
         /// <summary>
         /// 
         /// </summary>
-        public string _ref { get; set; }
-        public string ref_type { get; set; }
-        public string master_branch { get; set; }
-        public object description { get; set; }
-        public string pusher_type { get; set; }
-        public Repository repository { get; set; }
-        public Sender sender { get; set; }
+        [JsonProperty("_ref")]
+        public string Ref { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonProperty("ref_type")]
+        public string RefType { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonProperty("master_branch")]
+        public string MasterBranch { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonProperty("description")]
+        public object Description { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonProperty("pusher_type")]
+        public string PusherType { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonProperty("repository")]
+        public Repository Repository { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [JsonProperty("sender")]
+        public Sender Sender { get; set; }
 
         /// <summary>
         /// Verify if event type is push

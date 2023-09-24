@@ -1,9 +1,5 @@
 ﻿using FluentValidation;
 using Github.Webhook.Models;
-using Github.Webhook.Settings;
-using Github.Webhook.Validators.Extensions;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace Github.Webhook.Validators
 {
@@ -18,7 +14,9 @@ namespace Github.Webhook.Validators
         public WebhookEventValidator()
         {
             ValidateEvent();
+            ValidateSender();
             ValidateSignature();
+            ValidateRepository();
         }
 
         private void ValidateEvent()
@@ -31,26 +29,26 @@ namespace Github.Webhook.Validators
 
         private void ValidateSignature()
         {
-            var message = "X-Hub-Signature is not valid!";
             RuleFor(c => c.GithubSignature ?? string.Empty)
                 .NotNull()
                 .NotEmpty()
-                .WithMessage("Missing X-Hub-Signature!")
-                //.GithubSignature(message)
-                //.Equal(model => GetHash(model))
-                .WithMessage(message);
+                .WithMessage("Missing X-Hub-Signature!");
         }
 
-        private static string GetHash(RequestWebhookEventViewModel model)
+        private void ValidateRepository()
         {
-            string hash = string.Empty;
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(model);
-            using (var hmac = new HMACSHA256(Encoding.ASCII.GetBytes(Secrets.ApiGithubSecret)))
-            {
-                var hashBytes = hmac.ComputeHash(Encoding.ASCII.GetBytes(json));
-                hash = "sha256=" + BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-            }
-            return hash;
+            RuleFor(c => c.Repository)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("Missing Repository!");
+        }
+
+        private void ValidateSender()
+        {
+            RuleFor(c => c.Sender)
+                .NotNull()
+                .NotEmpty()
+                .WithMessage("Missing Sender!");
         }
     }
 }

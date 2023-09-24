@@ -1,12 +1,14 @@
 ﻿using Github.Webhook.Middlewares;
 using Github.Webhook.Settings;
 using Github.Webhook.Validators;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Github.Webhook.Configurations
 {
     /// <summary>
     /// IoC configuration
     /// </summary>
+    [ExcludeFromCodeCoverage]
     public static class DependencyInjectionConfig
     {
         /// <summary>
@@ -30,7 +32,7 @@ namespace Github.Webhook.Configurations
             // Infra - Data
             var githubSecret = configuration[Secrets.ApiGithubSecretKey];
             ArgumentNullException.ThrowIfNull(nameof(githubSecret));
-            services.AddSingleton(c => Secrets.ApiGithubSecret = githubSecret ?? string.Empty);
+            Secrets.ApiGithubSecret = githubSecret;
         }
     }
 }

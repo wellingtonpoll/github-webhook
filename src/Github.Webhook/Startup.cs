@@ -51,6 +51,9 @@ namespace Github.Webhook.API
 
             // .NET Native DI
             services.AddDependencyInjectionConfiguration(Configuration);
+
+            // Authorization
+            services.AddSecurityConfiguration();
         }
 
         /// <summary>
@@ -68,6 +71,9 @@ namespace Github.Webhook.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseCors(c =>
             {
